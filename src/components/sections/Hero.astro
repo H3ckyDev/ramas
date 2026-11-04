@@ -1,0 +1,424 @@
+---
+/**
+ * Hero.astro — High-impact editorial hero section for RAMAS website.
+ * Asymmetric two-column layout with staggered reveal animations.
+ */
+---
+
+<section class="hero" id="inicio" aria-labelledby="hero-heading">
+  <!-- Decorative elements -->
+  <div class="hero__decor-dots" aria-hidden="true"></div>
+  <div class="hero__decor-curve" aria-hidden="true"></div>
+  <div class="hero__decor-ring" aria-hidden="true"></div>
+
+  <div class="hero__container">
+    <!-- Content Column -->
+    <div class="hero__content">
+
+      <h1 class="hero__title reveal reveal--delay-2" id="hero-heading">
+        Máquinas expendedoras<br>
+        <span class="hero__title-highlight">para tu espacio</span>
+      </h1>
+
+      <p class="hero__subtitle reveal reveal--delay-3">
+        Transformamos cualquier pausa en un momento delicioso con nuestras
+        soluciones de snacks y bebidas para empresas y espacios de trabajo.
+      </p>
+
+      <div class="hero__actions reveal reveal--delay-4">
+        <a
+          href="https://wa.me/56949684141?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20una%20cotizaci%C3%B3n%20para%20un%20expendedor%20RAMAS"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn--whatsapp"
+          aria-label="Solicita tu cotización por WhatsApp (abre en una nueva pestaña)"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.174.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.174-.297-.019-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.013a9.65 9.65 0 0 1-4.92-1.348l-.353-.209-3.66.96.976-3.569-.23-.365a9.644 9.644 0 0 1-1.477-5.14c.002-5.334 4.342-9.674 9.679-9.674a9.62 9.62 0 0 1 6.84 2.834 9.62 9.62 0 0 1 2.83 6.842c-.003 5.334-4.343 9.674-9.679 9.674l.007-.005zM20.52 3.449C18.247 1.226 15.237 0 12.045 0 5.463 0 .104 5.334.101 11.893a11.86 11.86 0 0 0 1.587 5.946L0 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.58 0 11.94-5.335 11.943-11.894a11.83 11.83 0 0 0-3.416-8.451z"/>
+          </svg>
+          <span>Solicita tu cotización</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Image Column -->
+    <div class="hero__visual reveal reveal--delay-3">
+      <div class="hero__image-wrapper">
+        <img
+          src="/maquina.png"
+          alt="Máquina expendedora moderna con variedad de snacks y bebidas"
+          class="hero__image"
+          width="800"
+          height="1000"
+          loading="eager"
+          decoding="async"
+        />
+        <!-- Image decorative accent -->
+        <div class="hero__image-accent" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section ─────────────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    background:
+      linear-gradient(168deg, var(--color-bg-warm) 0%, var(--color-bg-rose) 55%, var(--color-bg-warm) 100%);
+    overflow: hidden;
+    padding-top: 64px; /* header offset on mobile */
+  }
+
+  /* ── Container ───────────────────────────────────── */
+  .hero__container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.25rem 1.25rem 3rem;
+    width: 100%;
+  }
+
+  /* ── Content ─────────────────────────────────────── */
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.15rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── Title ───────────────────────────────────────── */
+  .hero__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--color-text);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .hero__title-highlight {
+    position: relative;
+    display: inline;
+    white-space: nowrap;
+  }
+
+  .hero__title-highlight::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    width: 100%;
+    height: 8px;
+    background: var(--color-primary-light);
+    border-radius: 4px;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s;
+  }
+
+  .hero__title-highlight.is-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* ── Subtitle ────────────────────────────────────── */
+  .hero__subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.7;
+    color: var(--color-text-light);
+    margin: 0;
+    max-width: 480px;
+  }
+
+  /* ── Actions ─────────────────────────────────────── */
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ── Visual column ───────────────────────────────── */
+  .hero__visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__image-wrapper {
+    position: relative;
+    max-width: 420px;
+    width: 100%;
+  }
+
+  .hero__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+
+  /* Accent shape behind image */
+  .hero__image-accent {
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    width: 60%;
+    height: 60%;
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, transparent 70%);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0.6;
+  }
+
+  /* ── Decorative: dot pattern ─────────────────────── */
+  .hero__decor-dots {
+    position: absolute;
+    top: 15%;
+    right: 5%;
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+    opacity: 0.3;
+    background-image:
+      radial-gradient(circle, var(--color-primary) 1.2px, transparent 1.2px);
+    background-size: 14px 14px;
+  }
+
+  /* ── Decorative: curved line ─────────────────────── */
+  .hero__decor-curve {
+    position: absolute;
+    bottom: 8%;
+    left: -40px;
+    width: 220px;
+    height: 220px;
+    border: 2px solid var(--color-primary-light);
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.35;
+    clip-path: inset(0 0 50% 50%);
+  }
+
+  /* ── Decorative: ring ────────────────────────────── */
+  .hero__decor-ring {
+    position: absolute;
+    top: 30%;
+    left: 48%;
+    width: 320px;
+    height: 320px;
+    border: 1.5px solid var(--color-primary-light);
+    border-radius: 50%;
+    z-index: 0;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  /* ── Mobile layout adjustments ───────────────────── */
+  @media (max-width: 767px) {
+    .hero__container {
+      padding: 1.75rem 1.25rem 2.5rem;
+      gap: 2rem;
+    }
+
+    .hero__content {
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero__actions {
+      justify-content: center;
+      width: 100%;
+    }
+
+    .btn--whatsapp {
+      width: 100%;
+      max-width: 320px;
+      justify-content: center;
+    }
+
+    .hero__image-wrapper {
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    .hero__decor-dots,
+    .hero__decor-curve,
+    .hero__decor-ring {
+      display: none;
+    }
+  }
+
+  /* ── Desktop layout ──────────────────────────────── */
+  @media (min-width: 768px) {
+    .hero {
+      padding-top: 72px;
+    }
+
+    .hero__container {
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+      padding: 4rem 2rem;
+    }
+
+    .hero__content {
+      flex: 0 0 55%;
+      gap: 1.75rem;
+    }
+
+    .hero__visual {
+      flex: 0 0 45%;
+      justify-content: flex-end;
+    }
+
+    .hero__image-wrapper {
+      max-width: 460px;
+    }
+
+    .hero__decor-dots {
+      width: 140px;
+      height: 140px;
+      top: 12%;
+      right: 8%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero__container {
+      padding: 5rem 2rem;
+    }
+
+    .hero__title {
+      max-width: 600px;
+    }
+
+    .hero__image-wrapper {
+      max-width: 500px;
+    }
+  }
+
+  /* ── Float / parallax animation on image ─────────── */
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+  }
+
+  @media (min-width: 768px) {
+    .hero__image-wrapper {
+      animation: heroFloat 6s ease-in-out infinite;
+    }
+  }
+
+  /* ── Reveal animation (entry) ────────────────────── */
+  .hero .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero .reveal--delay-1 { transition-delay: 0.1s; }
+  .hero .reveal--delay-2 { transition-delay: 0.25s; }
+  .hero .reveal--delay-3 { transition-delay: 0.4s; }
+  .hero .reveal--delay-4 { transition-delay: 0.55s; }
+
+  /* ── Reduced motion ──────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .hero .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .hero__title-highlight::after {
+      transform: scaleX(1);
+      transition: none;
+    }
+
+    .hero__image-wrapper {
+      animation: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ── Reveal observer ───────────────────────────── */
+    var heroSection = document.querySelector('.hero');
+    if (!heroSection) return;
+
+    var reveals = heroSection.querySelectorAll('.reveal');
+    var highlight = heroSection.querySelector('.hero__title-highlight');
+
+    function triggerHeroReveal() {
+      reveals.forEach(function (el) { el.classList.add('is-visible'); });
+      if (highlight) highlight.classList.add('is-visible');
+    }
+
+    if (prefersReduced) {
+      triggerHeroReveal();
+      return;
+    }
+
+    var rect = heroSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      requestAnimationFrame(function () {
+        triggerHeroReveal();
+      });
+    } else {
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              triggerHeroReveal();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.05 }
+      );
+      observer.observe(heroSection);
+    }
+
+    /* ── Subtle parallax on image (desktop only) ───── */
+    if (window.innerWidth >= 768) {
+      var imageWrapper = heroSection.querySelector('.hero__image-wrapper');
+      if (!imageWrapper) return;
+
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            var scrollY = window.scrollY;
+            var offset = scrollY * 0.06;
+            // Combine with the float animation
+            imageWrapper.style.transform = 'translateY(' + (-offset) + 'px)';
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+  })();
+</script>

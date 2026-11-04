@@ -1,0 +1,545 @@
+---
+/**
+ * Benefits.astro — Sección de Beneficios con 5 Expansion Panels
+ * Todos colapsados por defecto, expandibles al hacer clic.
+ */
+
+const panels = [
+  {
+    id: 'pagos-inteligentes',
+    title: 'Pagos inteligentes, rápidos y sin efectivo',
+    subtitle: 'Tecnología sin contacto NFC, tarjetas y billeteras digitales',
+    icon: 'nfc',
+    initiallyOpen: false,
+    description:
+      'Incorporamos tecnología de pago electrónico que permite realizar compras de manera ágil, segura y sencilla, mediante tarjetas bancarias y billeteras digitales.',
+    features: [
+      'Pagos sin contacto mediante tecnología NFC.',
+      'Compatibilidad con tarjetas de débito y crédito.',
+      'Transacciones digitales seguras y trazables.',
+      'Experiencia de compra rápida, intuitiva y moderna.',
+    ],
+  },
+  {
+    id: 'acceso-permanente',
+    title: 'Acceso permanente, sin restricciones de horario',
+    subtitle: 'Disponibilidad 24/7 continua para residentes, colaboradores y visitas',
+    icon: 'clock',
+    initiallyOpen: false,
+    description:
+      'Nuestras máquinas inteligentes permiten acceder a productos y servicios durante las 24 horas del día, los 7 días de la semana, ofreciendo autonomía y comodidad a residentes, colaboradores y visitantes.',
+    features: [
+      'Disponibilidad continua, incluso fuera del horario comercial.',
+      'Acceso inmediato a productos de primera necesidad y consumo diario.',
+      'Mayor comodidad sin necesidad de salir del edificio.',
+    ],
+  },
+  {
+    id: 'gestion-proactiva',
+    title: 'Gestión proactiva para garantizar la continuidad del servicio',
+    subtitle: 'Supervisión constante, reposición programada y mantención preventiva',
+    icon: 'gear',
+    initiallyOpen: false,
+    description:
+      'Nuestro modelo de operación incorpora planificación de reposición y mantenimiento preventivo, respaldado por tecnología de monitoreo para asegurar una experiencia confiable y constante.',
+    features: [
+      'Reposición planificada según consumo y demanda.',
+      'Mantención preventiva y supervisión periódica.',
+      'Atención oportuna ante incidencias técnicas.',
+      'Sin costos de instalación para la comunidad.',
+    ],
+  },
+  {
+    id: 'experiencia-visitantes',
+    title: 'Mejor experiencia para visitantes y usuarios',
+    subtitle: 'Más comodidad para tus visitantes, más valor para tu negocio',
+    icon: 'users',
+    initiallyOpen: false,
+    description:
+      'Ofrece a tus clientes, pasajeros y visitantes un servicio moderno, práctico y disponible cuando lo necesiten. Nuestras máquinas expendedoras entregan comodidad, autonomía y acceso inmediato a productos esenciales, agregando valor a tus instalaciones y mejorando la experiencia de quienes las visitan.',
+    features: [
+      'Más comodidad para tus visitantes, más valor para tu negocio.',
+      'Atención continua para clientes y pasajeros en salas de espera o recepción.',
+      'Acceso inmediato a productos esenciales sin salir del establecimiento.',
+      'Mejora la percepción y calidad de servicio de tus instalaciones.',
+    ],
+  },
+  {
+    id: 'bienestar-colaboradores',
+    title: 'Colaboradores más cómodos, empresas más productivas',
+    subtitle: 'Transforma los espacios de descanso en una experiencia de bienestar',
+    icon: 'coffee',
+    initiallyOpen: false,
+    description:
+      'Transforma los espacios de descanso en una experiencia de bienestar. Ofrece a tus colaboradores acceso inmediato a snacks, bebidas y productos esenciales, optimizando sus tiempos y contribuyendo a una jornada más cómoda, eficiente y productiva.',
+    features: [
+      'Acceso inmediato a snacks y bebidas para optimizar tiempos de pausa.',
+      'Contribuye a una jornada de trabajo más cómoda, eficiente y productiva.',
+      'Fomenta el bienestar integral del equipo dentro de la empresa.',
+      'Espacios de descanso mejor equipados sin inversión para la organización.',
+    ],
+  },
+];
+---
+
+<section id="beneficios" class="benefits" aria-labelledby="benefits-heading">
+  <div class="container container--narrow">
+    <!-- Minimal Header -->
+    <div class="benefits__header reveal">
+      <h2 id="benefits-heading">Beneficios</h2>
+    </div>
+
+    <!-- 5 Expansion Panels Accordion -->
+    <div class="benefits__accordion" role="region" aria-label="Lista de beneficios interactivos">
+      {panels.map((panel, index) => (
+        <div class="expansion-panel-wrapper reveal" style={`--delay: ${index * 75}ms;`}>
+          <div
+            class:list={[
+              'expansion-panel',
+              { 'is-open': panel.initiallyOpen },
+            ]}
+            id={`panel-container-${panel.id}`}
+          >
+            <!-- Trigger Header -->
+            <button
+              type="button"
+              class="expansion-trigger"
+              aria-expanded={panel.initiallyOpen ? 'true' : 'false'}
+              aria-controls={`panel-body-${panel.id}`}
+              id={`panel-header-${panel.id}`}
+            >
+              <div class="expansion-trigger__left">
+                <div class="expansion-icon" aria-hidden="true">
+                  {panel.icon === 'nfc' && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="5" width="20" height="14" rx="2"/>
+                      <line x1="2" y1="10" x2="22" y2="10"/>
+                      <path d="M6 15h2"/>
+                      <path d="M12 15h6"/>
+                    </svg>
+                  )}
+                  {panel.icon === 'clock' && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                  )}
+                  {panel.icon === 'gear' && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  )}
+                  {panel.icon === 'users' && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                  )}
+                  {panel.icon === 'coffee' && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+                      <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/>
+                      <line x1="6" y1="2" x2="6" y2="4"/>
+                      <line x1="10" y1="2" x2="10" y2="4"/>
+                      <line x1="14" y1="2" x2="14" y2="4"/>
+                    </svg>
+                  )}
+                </div>
+
+                <div class="expansion-titles">
+                  <div class="expansion-title-row">
+                    <h3 class="expansion-title">{panel.title}</h3>
+                  </div>
+                  <span class="expansion-subtitle">{panel.subtitle}</span>
+                </div>
+              </div>
+
+              <!-- Chevron indicator -->
+              <div class="expansion-chevron" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
+            </button>
+
+            <!-- Expansion Body (CSS Grid 0fr -> 1fr animation) -->
+            <div
+              class="expansion-content"
+              id={`panel-body-${panel.id}`}
+              role="region"
+              aria-labelledby={`panel-header-${panel.id}`}
+            >
+              <div class="expansion-inner">
+                <div class="expansion-body-content">
+                  <p class="expansion-desc">{panel.description}</p>
+
+                  <ul class="expansion-features" role="list">
+                    {panel.features.map((feat) => (
+                      <li class="expansion-feature-item">
+                        <svg
+                          class="expansion-check"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function initExpansionPanels(): void {
+    const panels = document.querySelectorAll<HTMLElement>('.expansion-panel');
+
+    panels.forEach((panel) => {
+      const trigger = panel.querySelector<HTMLButtonElement>('.expansion-trigger');
+      if (!trigger) return;
+
+      trigger.addEventListener('click', () => {
+        const isOpen = panel.classList.contains('is-open');
+
+        if (isOpen) {
+          panel.classList.remove('is-open');
+          trigger.setAttribute('aria-expanded', 'false');
+        } else {
+          panel.classList.add('is-open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  }
+
+  initExpansionPanels();
+  document.addEventListener('astro:page-load', initExpansionPanels);
+</script>
+
+<style>
+  .benefits {
+    padding-block: var(--section-padding);
+    background-color: var(--color-bg-warm);
+    position: relative;
+  }
+
+  .benefits__header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .benefits__header h2 {
+    font-size: var(--text-3xl);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+  }
+
+  /* Accordion Container */
+  .benefits__accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    max-width: 840px;
+    margin-inline: auto;
+  }
+
+  /* Panel Wrapper for Reveal */
+  .expansion-panel-wrapper {
+    width: 100%;
+  }
+
+  /* Panel Card */
+  .expansion-panel {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition:
+      border-color var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .expansion-panel:hover {
+    border-color: var(--color-primary);
+  }
+
+  .expansion-panel.is-open {
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 30px rgba(232, 160, 191, 0.15);
+  }
+
+  /* Trigger Button */
+  .expansion-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.65rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-body);
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .expansion-trigger:hover {
+    background-color: rgba(253, 240, 245, 0.4);
+  }
+
+  .expansion-trigger:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+
+  .expansion-trigger__left {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Icon */
+  .expansion-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-rose);
+    color: var(--color-primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .expansion-panel.is-open .expansion-icon {
+    transform: scale(1.05);
+  }
+
+  /* Titles */
+  .expansion-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .expansion-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .expansion-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: var(--leading-snug);
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .expansion-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--color-primary-dark);
+    color: #ffffff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .expansion-subtitle {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  /* Chevron */
+  .expansion-chevron {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                background-color var(--duration-fast) var(--ease-out),
+                color var(--duration-fast) var(--ease-out);
+  }
+
+  .expansion-panel.is-open .expansion-chevron {
+    transform: rotate(180deg);
+    background: var(--color-primary-subtle);
+    color: var(--color-primary-darker);
+  }
+
+  /* Expandable Content (CSS Grid 0fr -> 1fr animation) */
+  .expansion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .expansion-panel.is-open .expansion-content {
+    grid-template-rows: 1fr;
+  }
+
+  .expansion-inner {
+    overflow: hidden;
+  }
+
+  .expansion-body-content {
+    padding: 0 1.75rem 1.65rem 5.35rem;
+    border-top: 1px solid var(--color-border-light);
+    margin-top: 0.35rem;
+    padding-top: 1.25rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .expansion-panel.is-open .expansion-body-content {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.08s;
+  }
+
+  .expansion-desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Features List */
+  .expansion-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .expansion-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    line-height: 1.45;
+  }
+
+  .expansion-check {
+    color: var(--color-primary-dark);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 680px) {
+    .expansion-trigger {
+      padding: 1rem 1.25rem;
+      gap: 0.75rem;
+    }
+
+    .expansion-trigger__left {
+      gap: 0.85rem;
+    }
+
+    .expansion-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .expansion-title {
+      font-size: 1rem;
+    }
+
+    .expansion-body-content {
+      padding: 1rem 1.25rem 1.25rem 1.25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .expansion-trigger {
+      padding: 0.875rem 1rem;
+      gap: 0.65rem;
+    }
+
+    .expansion-trigger__left {
+      gap: 0.75rem;
+    }
+
+    .expansion-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .expansion-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .expansion-chevron {
+      width: 30px;
+      height: 30px;
+    }
+
+    .expansion-title {
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+
+    .expansion-subtitle {
+      font-size: 0.72rem;
+    }
+
+    .expansion-body-content {
+      padding: 0.85rem 1rem 1.1rem;
+    }
+
+    .expansion-desc {
+      font-size: 0.86rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .expansion-feature-item {
+      font-size: 0.82rem;
+      gap: 0.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .expansion-content,
+    .expansion-chevron,
+    .expansion-panel {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

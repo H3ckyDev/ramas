@@ -1,0 +1,263 @@
+---
+/**
+ * Footer.astro — Site footer with navigation, contact info,
+ * and legal links. Dark background theme.
+ */
+const currentYear = new Date().getFullYear();
+
+const navLinks = [
+  { label: 'Inicio', href: '#inicio' },
+  { label: 'Beneficios', href: '#beneficios' },
+  { label: 'Catálogo', href: '#catalogo' },
+  { label: 'Expendedores', href: '#espacios' },
+  { label: 'Contacto', href: '#contacto' },
+];
+---
+
+<footer id="contacto" class="footer" role="contentinfo">
+  <div class="footer__container">
+    <!-- ─── Top section: Three columns ─── -->
+    <div class="footer__top">
+      <!-- Column 1: Brand -->
+      <div class="footer__brand">
+        <a href="#" class="footer__logo" aria-label="RAMAS - Ir al inicio">
+          RAMAS
+        </a>
+        <p class="footer__slogan">Tu antojo, en un clic.</p>
+        <p class="footer__brand-desc">
+          Soluciones de máquinas expendedoras para empresas y espacios de
+          trabajo.
+        </p>
+      </div>
+
+      <!-- Column 2: Navigation -->
+      <div class="footer__nav-col">
+        <h3 class="footer__col-heading">Navegación</h3>
+        <nav aria-label="Navegación del pie de página">
+          <ul class="footer__nav-list" role="list">
+            {navLinks.map(({ label, href }) => (
+              <li>
+                <a href={href} class="footer__nav-link">{label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Column 3: Contact -->
+      <div class="footer__contact-col">
+        <h3 class="footer__col-heading">Contacto</h3>
+        <ul class="footer__contact-list" role="list">
+          <li class="footer__contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            <a href="mailto:contacto@ramas.cl" class="footer__nav-link">
+              contacto@ramas.cl
+            </a>
+          </li>
+          <li class="footer__contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <a href="tel:+56949684141" class="footer__nav-link">
+              +56 9 4968 4141
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ─── Divider ─── -->
+    <hr class="footer__divider" />
+
+    <!-- ─── Bottom section ─── -->
+    <div class="footer__bottom">
+      <p class="footer__copy">
+        &copy; {currentYear} RAMAS. Todos los derechos reservados.
+      </p>
+      <div class="footer__legal">
+        <a href="#" class="footer__legal-link">Aviso de privacidad</a>
+        <a href="#" class="footer__legal-link">Términos y condiciones</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ───────── Footer base ───────── */
+  .footer {
+    background: var(--color-bg-dark, #1A1A2E);
+    color: var(--color-text-on-dark, #F9FAFB);
+    padding: 4rem 1.5rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .footer__container {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  /* ───────── Top section grid ───────── */
+  .footer__top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer {
+      padding: 5rem 2rem 2rem;
+    }
+
+    .footer__top {
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  /* ───────── Brand column ───────── */
+  .footer__logo {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+  }
+
+  .footer__logo:hover {
+    color: var(--color-primary);
+  }
+
+  .footer__slogan {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: rgba(249, 250, 251, 0.5);
+    margin: 0.5rem 0 0;
+    font-style: italic;
+  }
+
+  .footer__brand-desc {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: rgba(249, 250, 251, 0.6);
+    line-height: 1.65;
+    margin: 0.75rem 0 0;
+    max-width: 320px;
+  }
+
+  /* ───────── Column headings ───────── */
+  .footer__col-heading {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(249, 250, 251, 0.45);
+    margin: 0 0 1rem;
+  }
+
+  /* ───────── Navigation links ───────── */
+  .footer__nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .footer__nav-link {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: rgba(249, 250, 251, 0.7);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer__nav-link:hover {
+    color: var(--color-primary);
+  }
+
+  /* ───────── Contact list ───────── */
+  .footer__contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer__contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: rgba(249, 250, 251, 0.7);
+  }
+
+  .footer__contact-item svg {
+    flex-shrink: 0;
+    color: rgba(249, 250, 251, 0.4);
+  }
+
+  .footer__muted {
+    color: rgba(249, 250, 251, 0.4);
+    font-style: italic;
+  }
+
+  /* ───────── Divider ───────── */
+  .footer__divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 0 0 1.5rem;
+  }
+
+  /* ───────── Bottom section ───────── */
+  .footer__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+
+  .footer__copy {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: rgba(249, 250, 251, 0.4);
+    margin: 0;
+  }
+
+  .footer__legal {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer__legal-link {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: rgba(249, 250, 251, 0.4);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer__legal-link:hover {
+    color: var(--color-primary);
+  }
+</style>

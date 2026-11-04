@@ -1,0 +1,262 @@
+---
+/**
+ * CTA.astro — Call-to-action / conversion section
+ * Visually striking section with gradient background, decorative shapes,
+ * and a compelling message to drive contact form submissions.
+ */
+---
+
+<section class="cta" aria-labelledby="cta-heading">
+  <div class="cta__bg-shapes" aria-hidden="true">
+    <div class="cta__circle cta__circle--1"></div>
+    <div class="cta__circle cta__circle--2"></div>
+    <div class="cta__circle cta__circle--3"></div>
+    <div class="cta__line cta__line--1"></div>
+    <div class="cta__line cta__line--2"></div>
+  </div>
+
+  <div class="cta__container reveal-up">
+    <span class="badge">Comienza ahora</span>
+    <h2 id="cta-heading" class="cta__heading">
+      Tu espacio puede ofrecer<br /> mucho más
+    </h2>
+    <p class="cta__text">
+      Conversemos sobre cómo incorporar una solución de snacks y bebidas a tu
+      empresa o establecimiento.
+    </p>
+    <a
+      href="https://wa.me/56949684141?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20una%20cotizaci%C3%B3n%20para%20un%20dispensador%20RAMAS"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn--lg btn--whatsapp"
+      aria-label="Solicitar cotización por WhatsApp (abre en una nueva pestaña)"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.174.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.174-.297-.019-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.013a9.65 9.65 0 0 1-4.92-1.348l-.353-.209-3.66.96.976-3.569-.23-.365a9.644 9.644 0 0 1-1.477-5.14c.002-5.334 4.342-9.674 9.679-9.674a9.62 9.62 0 0 1 6.84 2.834 9.62 9.62 0 0 1 2.83 6.842c-.003 5.334-4.343 9.674-9.679 9.674l.007-.005zM20.52 3.449C18.247 1.226 15.237 0 12.045 0 5.463 0 .104 5.334.101 11.893a11.86 11.86 0 0 0 1.587 5.946L0 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.58 0 11.94-5.335 11.943-11.894a11.83 11.83 0 0 0-3.416-8.451z"/>
+      </svg>
+      <span>Solicitar cotización por WhatsApp</span>
+    </a>
+    <p class="cta__trust">
+      Sin formularios ni esperas. Conversa directamente con nuestro equipo.
+    </p>
+  </div>
+</section>
+
+<script>
+  function initCTAObserver(): void {
+    const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!motionOk) return;
+
+    const els = document.querySelectorAll<HTMLElement>('.cta .reveal-up');
+    if (!els.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    els.forEach((el) => observer.observe(el));
+  }
+
+  initCTAObserver();
+  document.addEventListener('astro:after-swap', initCTAObserver);
+</script>
+
+<style>
+  /* ───────── Section ───────── */
+  .cta {
+    position: relative;
+    overflow: hidden;
+    padding: 4.25rem 1.5rem;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-light) 0%,
+      var(--color-bg-rose) 100%
+    );
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .cta {
+      padding: 5.25rem 2rem;
+    }
+  }
+
+  /* ───────── Decorative shapes ───────── */
+  .cta__bg-shapes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .cta__circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+
+  .cta__circle--1 {
+    width: 340px;
+    height: 340px;
+    border: 2px solid var(--color-primary);
+    top: -80px;
+    left: -100px;
+  }
+
+  .cta__circle--2 {
+    width: 200px;
+    height: 200px;
+    background: var(--color-primary);
+    bottom: -60px;
+    right: -40px;
+    opacity: 0.08;
+  }
+
+  .cta__circle--3 {
+    width: 120px;
+    height: 120px;
+    border: 2px solid var(--color-primary-dark);
+    top: 20%;
+    right: 10%;
+  }
+
+  .cta__line {
+    position: absolute;
+    background: var(--color-primary);
+    opacity: 0.1;
+  }
+
+  .cta__line--1 {
+    width: 180px;
+    height: 2px;
+    top: 30%;
+    left: 5%;
+    transform: rotate(-25deg);
+  }
+
+  .cta__line--2 {
+    width: 140px;
+    height: 2px;
+    bottom: 25%;
+    right: 8%;
+    transform: rotate(30deg);
+  }
+
+  /* ───────── Container ───────── */
+  .cta__container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* ───────── Badge ───────── */
+  .badge {
+    display: inline-block;
+    padding: 0.375rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-primary-dark);
+    background: rgba(232, 160, 191, 0.18);
+    border: 1px solid rgba(232, 160, 191, 0.3);
+    border-radius: 100px;
+    text-transform: uppercase;
+  }
+
+  /* ───────── Heading ───────── */
+  .cta__heading {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  /* ───────── Body text ───────── */
+  .cta__text {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    max-width: 520px;
+    margin: 0;
+  }
+
+  /* ───────── Button ───────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn--lg {
+    padding: 1rem 2.5rem;
+    font-size: 1.0625rem;
+  }
+
+  .btn--dark {
+    background: var(--color-text);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(45, 45, 45, 0.25);
+  }
+
+  .btn--dark:hover {
+    background: #1a1a1a;
+    box-shadow: 0 6px 28px rgba(45, 45, 45, 0.35);
+  }
+
+  /* ───────── Trust text ───────── */
+  .cta__trust {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--color-text-light);
+    margin: 0;
+    opacity: 0.75;
+  }
+
+  /* ───────── Reveal animation ───────── */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-up {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

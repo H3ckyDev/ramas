@@ -1,0 +1,255 @@
+---
+/**
+ * Dispensers.astro — "Catálogo de nuestros dispensadores"
+ * Utiliza @lucide/astro (librería minimalista y ultraligera oficial).
+ * Espaciado compacto y armónico en títulos y tarjetas.
+ */
+
+import {
+  Sandwich,
+  Soup,
+  CupSoda,
+  Coffee,
+  SprayCan,
+  Dumbbell,
+} from '@lucide/astro';
+
+interface DispenserCategory {
+  id: string;
+  title: string;
+  description: string;
+  icon: 'snacks' | 'alimentos' | 'bebidas' | 'cafe' | 'limpieza' | 'proteinas';
+}
+
+const categories: DispenserCategory[] = [
+  {
+    id: 'snacks',
+    title: 'Snacks',
+    description: 'Piqueos rápidos para antojos y pausas productivas.',
+    icon: 'snacks',
+  },
+  {
+    id: 'alimentos-listos',
+    title: 'Alimentos listos',
+    description: 'Soluciones prácticas para colaciones y emergencias.',
+    icon: 'alimentos',
+  },
+  {
+    id: 'bebidas',
+    title: 'Bebidas',
+    description: 'Bebidas frías siempre listas para refrescar tu jornada.',
+    icon: 'bebidas',
+  },
+  {
+    id: 'cafe',
+    title: 'Café',
+    description: 'Una pausa reconfortante con café recién preparado.',
+    icon: 'cafe',
+  },
+  {
+    id: 'limpieza-higiene',
+    title: 'Limpieza e higiene',
+    description: 'Artículos esenciales para mantener tus espacios limpios y cuidados.',
+    icon: 'limpieza',
+  },
+  {
+    id: 'batidos-proteicos',
+    title: 'Batidos proteicos',
+    description: 'Nutrición y energía al instante para recargar tu jornada y entrenamientos.',
+    icon: 'proteinas',
+  },
+];
+---
+
+<section id="catalogo" class="dispensers" aria-labelledby="dispensers-heading">
+  <div id="dispensadores" style="position: absolute; top: 0; left: 0; width: 0; height: 0; pointer-events: none;" aria-hidden="true"></div>
+  <div class="dispensers__container">
+    <!-- Section Header (Espaciado ajustado y compacto) -->
+    <div class="dispensers__header reveal">
+      <h2 id="dispensers-heading">Catálogo de nuestros expendedores</h2>
+    </div>
+
+    <!-- Cards Grid (Todas abiertas y visibles) -->
+    <div class="dispensers__grid" role="region" aria-label="Catálogo de expendedores">
+      {categories.map((item, index) => (
+        <div class="dispenser-item reveal" style={`--delay: ${index * 65}ms;`}>
+          <article class="dispenser-card">
+            <!-- Anillo Circular con Icono Minimalista de Lucide -->
+            <div class="card-ring" aria-hidden="true">
+              {item.icon === 'snacks' && (
+                <Sandwich size={42} stroke-width={1.8} class="card-icon" />
+              )}
+              {item.icon === 'alimentos' && (
+                <Soup size={42} stroke-width={1.8} class="card-icon" />
+              )}
+              {item.icon === 'bebidas' && (
+                <CupSoda size={42} stroke-width={1.8} class="card-icon" />
+              )}
+              {item.icon === 'cafe' && (
+                <Coffee size={42} stroke-width={1.8} class="card-icon" />
+              )}
+              {item.icon === 'limpieza' && (
+                <SprayCan size={42} stroke-width={1.8} class="card-icon" />
+              )}
+              {item.icon === 'proteinas' && (
+                <Dumbbell size={42} stroke-width={1.8} class="card-icon" />
+              )}
+            </div>
+
+            <!-- Información (Siempre visible) -->
+            <div class="card-content">
+              <h3 class="card-title">{item.title}</h3>
+              <p class="card-desc">{item.description}</p>
+            </div>
+          </article>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Contenedor de Sección ────────────────────────────────── */
+  .dispensers {
+    padding-block: clamp(3.5rem, 5vw, 4.75rem);
+    background-color: var(--color-bg-rose, #FDF0F5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dispensers__container {
+    max-width: var(--container-max, 1160px);
+    margin: 0 auto;
+    padding-inline: var(--container-padding, 1.5rem);
+  }
+
+  /* ── Header Compacto ───────────────────────────────────────── */
+  .dispensers__header {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 2rem;
+  }
+
+  .dispensers__header h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.85rem, 3.5vw, 2.35rem);
+    font-weight: 600;
+    color: var(--color-text, #1A1A2E);
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  /* ── Grid de Tarjetas Flotantes ──────────────────────────── */
+  .dispensers__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem 1.25rem;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 960px) {
+    .dispensers__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .dispensers__grid {
+      grid-template-columns: 1fr;
+      gap: 1.15rem;
+      max-width: 360px;
+    }
+  }
+
+  /* ── Wrapper para Reveal Suave ───────────────────────────── */
+  .dispenser-item {
+    display: flex;
+    height: 100%;
+  }
+
+  /* ── Tarjeta Abierta ──────────────────────────────────────── */
+  .dispenser-card {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 18px;
+    padding: 1.6rem 1.35rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow:
+      0 6px 18px -4px rgba(0, 0, 0, 0.04),
+      0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    transition:
+      transform 0.3s cubic-bezier(0.34, 1.3, 0.64, 1),
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .dispenser-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(201, 44, 94, 0.28);
+    box-shadow:
+      0 12px 24px -6px rgba(201, 44, 94, 0.12),
+      0 4px 10px -2px rgba(0, 0, 0, 0.03);
+  }
+
+  /* ── Anillo Circular ─────────────────────────────────────── */
+  .card-ring {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    border: 2.2px solid #2D2D38;
+    color: #2D2D38;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.95rem;
+    background-color: #FAFAFB;
+    transition:
+      border-color 0.28s ease,
+      color 0.28s ease,
+      background-color 0.28s ease,
+      transform 0.28s ease;
+  }
+
+  .dispenser-card:hover .card-ring {
+    border-color: var(--color-primary, #C92C5E);
+    color: var(--color-primary, #C92C5E);
+    background-color: var(--color-primary-subtle, #FDF0F5);
+    transform: scale(1.06);
+  }
+
+  .card-icon {
+    display: block;
+    transition: transform 0.28s ease;
+  }
+
+  /* ── Información (Título y Descripción) ───────────────────── */
+  .card-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: var(--color-text, #1A1A2E);
+    margin: 0 0 0.35rem;
+    line-height: 1.25;
+  }
+
+  .card-desc {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    color: var(--color-text-secondary, #555566);
+    line-height: 1.45;
+    margin: 0;
+  }
+</style>

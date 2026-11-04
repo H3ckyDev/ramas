@@ -1,0 +1,124 @@
+---
+import SEO from '@components/SEO.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const { title, description, canonical, ogImage } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  'name': 'RAMAS',
+  'description': 'Instalación y comercialización de máquinas expendedoras de snacks y bebidas para empresas, oficinas y espacios comerciales.',
+  'url': 'https://ramas.cl',
+  'logo': 'https://ramas.cl/favicon.svg',
+  'image': 'https://ramas.cl/og-image.jpg',
+  'telephone': '+56949684141',
+  'priceRange': '$$',
+  'sameAs': [],
+  'contactPoint': {
+    '@type': 'ContactPoint',
+    'telephone': '+56949684141',
+    'contactType': 'sales',
+    'availableLanguage': ['Spanish'],
+  },
+  'areaServed': {
+    '@type': 'Country',
+    'name': 'Chile',
+  },
+  'serviceType': [
+    'Máquinas expendedoras',
+    'Máquinas vending',
+    'Expendedores de snacks',
+    'Expendedores de bebidas',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Font Loading: Quicksand -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogImage={ogImage}
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Remove no-js class -->
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+  <body>
+    <slot />
+
+    <!-- Scroll Reveal Observer -->
+    <script>
+      function initRevealObserver(): void {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReducedMotion) {
+          document.querySelectorAll('.reveal').forEach((el) => {
+            el.classList.add('is-visible');
+          });
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.02,
+            rootMargin: '0px 0px 60px 0px',
+          }
+        );
+
+        document.querySelectorAll('.reveal').forEach((el) => {
+          observer.observe(el);
+        });
+      }
+
+      // Run on initial load and on Astro page transitions
+      initRevealObserver();
+      document.addEventListener('astro:page-load', initRevealObserver);
+    </script>
+  </body>
+</html>
