@@ -1,8 +1,9 @@
 ---
 /**
- * Dispensers.astro — "Catálogo de nuestros dispensadores"
- * Utiliza @lucide/astro (librería minimalista y ultraligera oficial).
- * Espaciado compacto y armónico en títulos y tarjetas.
+ * Dispensers.astro — "Catálogo de nuestros expendedores"
+ * Al hacer clic directamente en la tarjeta de un producto se abre su fotografía real.
+ * Al hacer clic en otro producto, la foto anterior desaparece y se abre la del nuevo.
+ * Diseño limpio: sin botones de mostrar/ocultar y sin tags inferiores.
  */
 
 import {
@@ -12,6 +13,7 @@ import {
   Coffee,
   SprayCan,
   Dumbbell,
+  X,
 } from '@lucide/astro';
 
 interface DispenserCategory {
@@ -19,6 +21,8 @@ interface DispenserCategory {
   title: string;
   description: string;
   icon: 'snacks' | 'alimentos' | 'bebidas' | 'cafe' | 'limpieza' | 'proteinas';
+  image: string;
+  imageAlt: string;
 }
 
 const categories: DispenserCategory[] = [
@@ -27,36 +31,48 @@ const categories: DispenserCategory[] = [
     title: 'Snacks',
     description: 'Piqueos rápidos para antojos y pausas productivas.',
     icon: 'snacks',
+    image: '/images/expendedores/dispensador_snacks.jpeg',
+    imageAlt: 'Máquina expendedora inteligente de snacks RAMAS',
   },
   {
     id: 'alimentos-listos',
     title: 'Alimentos listos',
     description: 'Soluciones prácticas para colaciones y emergencias.',
     icon: 'alimentos',
+    image: '/images/expendedores/dispensador_comidas_listas.jpeg',
+    imageAlt: 'Máquina expendedora de alimentos y comidas listas RAMAS',
   },
   {
     id: 'bebidas',
     title: 'Bebidas',
     description: 'Bebidas frías siempre listas para refrescar tu jornada.',
     icon: 'bebidas',
+    image: '/images/expendedores/dispensador_snacks.jpeg',
+    imageAlt: 'Máquina expendedora de bebidas y refrescos RAMAS',
   },
   {
     id: 'cafe',
     title: 'Café',
     description: 'Una pausa reconfortante con café recién preparado.',
     icon: 'cafe',
+    image: '/images/expendedores/dispensador_cafe.jpeg',
+    imageAlt: 'Máquina expendedora de café recién molido RAMAS',
   },
   {
     id: 'limpieza-higiene',
     title: 'Limpieza e higiene',
     description: 'Artículos esenciales para mantener tus espacios limpios y cuidados.',
     icon: 'limpieza',
+    image: '/images/expendedores/dispensador_limpeiza.jpeg',
+    imageAlt: 'Dispensador inteligente de productos de limpieza e higiene RAMAS',
   },
   {
     id: 'batidos-proteicos',
     title: 'Batidos proteicos',
     description: 'Nutrición y energía al instante para recargar tu jornada y entrenamientos.',
     icon: 'proteinas',
+    image: '/images/expendedores/dispenador_proteinas.jpeg',
+    imageAlt: 'Dispensador de batidos proteicos y nutrición RAMAS',
   },
 ];
 ---
@@ -64,16 +80,25 @@ const categories: DispenserCategory[] = [
 <section id="catalogo" class="dispensers" aria-labelledby="dispensers-heading">
   <div id="dispensadores" style="position: absolute; top: 0; left: 0; width: 0; height: 0; pointer-events: none;" aria-hidden="true"></div>
   <div class="dispensers__container">
-    <!-- Section Header (Espaciado ajustado y compacto) -->
+    <!-- Header -->
     <div class="dispensers__header reveal">
       <h2 id="dispensers-heading">Catálogo de nuestros expendedores</h2>
     </div>
 
-    <!-- Cards Grid (Todas abiertas y visibles) -->
+    <!-- Cards Grid con interacción directa al hacer clic en el item -->
     <div class="dispensers__grid" role="region" aria-label="Catálogo de expendedores">
       {categories.map((item, index) => (
-        <div class="dispenser-item reveal" style={`--delay: ${index * 65}ms;`}>
-          <article class="dispenser-card">
+        <div class="dispenser-item reveal" style={`--delay: ${index * 60}ms;`}>
+          <article
+            class="dispenser-card"
+            id={`card-${item.id}`}
+            data-id={item.id}
+            role="button"
+            tabindex="0"
+            aria-expanded="false"
+            aria-controls={`drawer-${item.id}`}
+            aria-label={`Ver expendedor de ${item.title}`}
+          >
             <!-- Anillo Circular con Icono Minimalista de Lucide -->
             <div class="card-ring" aria-hidden="true">
               {item.icon === 'snacks' && (
@@ -96,17 +121,169 @@ const categories: DispenserCategory[] = [
               )}
             </div>
 
-            <!-- Información (Siempre visible) -->
+            <!-- Información de la Categoría -->
             <div class="card-content">
               <h3 class="card-title">{item.title}</h3>
               <p class="card-desc">{item.description}</p>
+            </div>
+
+            <!-- Contenedor Desplegable con la Imagen limpia del Expendedor -->
+            <div
+              class="card-drawer"
+              id={`drawer-${item.id}`}
+              role="region"
+              aria-label={`Fotografía de expendedor de ${item.title}`}
+            >
+              <div class="card-drawer__inner">
+                <div class="card-showcase">
+                  <div class="photo-stage">
+                    <img
+                      src={item.image}
+                      alt={item.imageAlt}
+                      class="dispenser-photo"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </article>
         </div>
       ))}
     </div>
   </div>
+
+  <!-- Lightbox Modal para ampliar fotos al hacer clic en la imagen -->
+  <div id="dispenser-lightbox" class="dispenser-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="lightbox-overlay" id="lightbox-overlay"></div>
+    <div class="lightbox-dialog">
+      <button
+        type="button"
+        class="lightbox-close"
+        id="lightbox-close"
+        aria-label="Cerrar vista ampliada"
+      >
+        <X size={22} stroke-width={2.2} />
+      </button>
+
+      <div class="lightbox-figure">
+        <div class="lightbox-image-wrap">
+          <img id="lightbox-img" src="" alt="Vista previa del expendedor" />
+        </div>
+        <div class="lightbox-caption">
+          <h3 id="lightbox-title"></h3>
+          <p id="lightbox-desc"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  function initDispensersInteractivity(): void {
+    const cards = document.querySelectorAll<HTMLElement>('.dispenser-card');
+
+    const lightbox = document.getElementById('dispenser-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDesc = document.getElementById('lightbox-desc');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxOverlay = document.getElementById('lightbox-overlay');
+
+    let previousActiveElement: HTMLElement | null = null;
+
+    const openLightbox = (src: string, title: string, desc: string, triggerEl: HTMLElement) => {
+      if (!lightbox || !lightboxImg) return;
+      previousActiveElement = triggerEl;
+
+      lightboxImg.src = src;
+      lightboxImg.alt = title;
+      if (lightboxTitle) lightboxTitle.textContent = title;
+      if (lightboxDesc) lightboxDesc.textContent = desc;
+
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lightboxClose?.focus();
+    };
+
+    const closeLightbox = () => {
+      if (!lightbox) return;
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (previousActiveElement) {
+        previousActiveElement.focus();
+        previousActiveElement = null;
+      }
+    };
+
+    cards.forEach((card) => {
+      const toggleCard = (e: Event) => {
+        const target = e.target as HTMLElement;
+
+        // Si la tarjeta ya está abierta y el usuario hace clic en la foto, abre el visor ampliado
+        if (card.classList.contains('is-open') && target.closest('.dispenser-photo')) {
+          e.stopPropagation();
+          const img = card.querySelector<HTMLImageElement>('.dispenser-photo');
+          const title = card.querySelector('.card-title')?.textContent || '';
+          const desc = card.querySelector('.card-desc')?.textContent || '';
+          if (img) {
+            openLightbox(img.src, title, desc, card);
+            return;
+          }
+        }
+
+        const isCurrentlyOpen = card.classList.contains('is-open');
+
+        // Cerrar todas las otras tarjetas (la imagen anterior desaparece)
+        cards.forEach((otherCard) => {
+          if (otherCard !== card && otherCard.classList.contains('is-open')) {
+            otherCard.classList.remove('is-open');
+            otherCard.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Alternar el estado de la tarjeta clickeada
+        if (isCurrentlyOpen) {
+          card.classList.remove('is-open');
+          card.setAttribute('aria-expanded', 'false');
+        } else {
+          card.classList.add('is-open');
+          card.setAttribute('aria-expanded', 'true');
+
+          setTimeout(() => {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 80);
+        }
+      };
+
+      card.addEventListener('click', toggleCard);
+
+      // Accesibilidad con teclado (Enter y Espacio)
+      card.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleCard(e);
+        }
+      });
+    });
+
+    lightboxClose?.addEventListener('click', closeLightbox);
+    lightboxOverlay?.addEventListener('click', closeLightbox);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox?.classList.contains('is-open')) {
+        closeLightbox();
+      }
+    });
+  }
+
+  initDispensersInteractivity();
+  document.addEventListener('astro:page-load', () => {
+    initDispensersInteractivity();
+  });
+</script>
 
 <style>
   /* ── Contenedor de Sección ────────────────────────────────── */
@@ -126,11 +303,11 @@ const categories: DispenserCategory[] = [
     padding-inline: var(--container-padding, 1.5rem);
   }
 
-  /* ── Header Compacto ───────────────────────────────────────── */
+  /* ── Header ───────────────────────────────────────────────── */
   .dispensers__header {
     text-align: center;
     max-width: 780px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 2.25rem;
   }
 
   .dispensers__header h2 {
@@ -142,12 +319,13 @@ const categories: DispenserCategory[] = [
     margin: 0;
   }
 
-  /* ── Grid de Tarjetas Flotantes ──────────────────────────── */
+  /* ── Grid de Tarjetas ─────────────────────────────────────── */
   .dispensers__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem 1.25rem;
-    max-width: 1040px;
+    align-items: start;
+    max-width: 1060px;
     margin: 0 auto;
   }
 
@@ -158,52 +336,67 @@ const categories: DispenserCategory[] = [
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 620px) {
     .dispensers__grid {
       grid-template-columns: 1fr;
       gap: 1.15rem;
-      max-width: 360px;
+      max-width: 420px;
     }
   }
 
   /* ── Wrapper para Reveal Suave ───────────────────────────── */
   .dispenser-item {
     display: flex;
-    height: 100%;
+    width: 100%;
   }
 
-  /* ── Tarjeta Abierta ──────────────────────────────────────── */
+  /* ── Tarjeta Interactiva Clickeable ──────────────────────── */
   .dispenser-card {
     width: 100%;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 18px;
+    border: 1.5px solid rgba(0, 0, 0, 0.07);
+    border-radius: 20px;
     padding: 1.6rem 1.35rem 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
     box-shadow:
-      0 6px 18px -4px rgba(0, 0, 0, 0.04),
+      0 4px 16px -2px rgba(0, 0, 0, 0.04),
       0 2px 4px -1px rgba(0, 0, 0, 0.02);
     transition:
-      transform 0.3s cubic-bezier(0.34, 1.3, 0.64, 1),
-      box-shadow 0.3s ease,
-      border-color 0.3s ease;
+      border-color 0.28s ease,
+      box-shadow 0.28s ease,
+      transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1);
   }
 
   .dispenser-card:hover {
-    transform: translateY(-5px);
     border-color: rgba(96, 129, 106, 0.35);
+    transform: translateY(-4px);
     box-shadow:
-      0 14px 28px -6px rgba(96, 129, 106, 0.16),
-      0 4px 10px -2px rgba(232, 160, 191, 0.12);
+      0 12px 28px -6px rgba(96, 129, 106, 0.16),
+      0 4px 10px -2px rgba(232, 160, 191, 0.1);
+  }
+
+  .dispenser-card:focus-visible {
+    outline: 2px solid var(--color-primary, #60816A);
+    outline-offset: 3px;
+  }
+
+  .dispenser-card.is-open {
+    border-color: var(--color-primary, #60816A);
+    box-shadow:
+      0 16px 36px -6px rgba(96, 129, 106, 0.22),
+      0 6px 14px -2px rgba(96, 129, 106, 0.12);
   }
 
   /* ── Anillo Circular ─────────────────────────────────────── */
   .card-ring {
-    width: 82px;
-    height: 82px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     border: 2.2px solid #242E27;
     color: #242E27;
@@ -216,10 +409,11 @@ const categories: DispenserCategory[] = [
       border-color 0.28s ease,
       color 0.28s ease,
       background-color 0.28s ease,
-      transform 0.28s ease;
+      transform 0.28s cubic-bezier(0.34, 1.4, 0.64, 1);
   }
 
-  .dispenser-card:hover .card-ring {
+  .dispenser-card:hover .card-ring,
+  .dispenser-card.is-open .card-ring {
     border-color: var(--color-primary, #60816A);
     color: var(--color-primary, #60816A);
     background-color: var(--color-rose-subtle, #FDF2F7);
@@ -250,9 +444,205 @@ const categories: DispenserCategory[] = [
 
   .card-desc {
     font-family: var(--font-body);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     color: var(--color-text-secondary, #555566);
     line-height: 1.45;
     margin: 0;
+  }
+
+  /* ── Drawer Desplegable con CSS Grid ──────────────────────── */
+  .card-drawer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+  }
+
+  .dispenser-card.is-open .card-drawer {
+    grid-template-rows: 1fr;
+  }
+
+  .card-drawer__inner {
+    overflow: hidden;
+  }
+
+  /* ── Showcase de Fotografía Limpio (Sin tags) ─────────────── */
+  .card-showcase {
+    margin-top: 1.15rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(96, 129, 106, 0.14);
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+    transition:
+      opacity 0.3s ease,
+      transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dispenser-card.is-open .card-showcase {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.06s;
+  }
+
+  .photo-stage {
+    position: relative;
+    width: 100%;
+    min-height: 280px;
+    max-height: 380px;
+    background:
+      radial-gradient(circle at 50% 35%, #FFFFFF 0%, #F5F9F6 70%, #EBF2ED 100%);
+    border: 1px solid rgba(96, 129, 106, 0.16);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.15rem 0.85rem;
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+  }
+
+  .dispenser-photo {
+    max-height: 330px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.14));
+    transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+
+  .dispenser-card:hover .dispenser-photo {
+    transform: scale(1.02);
+  }
+
+  /* ── Lightbox Modal ───────────────────────────────────────── */
+  .dispenser-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .dispenser-lightbox.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 28, 21, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .lightbox-dialog {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    border-radius: 20px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow:
+      0 24px 60px -12px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+    transform: scale(0.94) translateY(12px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 1.5rem;
+  }
+
+  .dispenser-lightbox.is-open .lightbox-dialog {
+    transform: scale(1) translateY(0);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #F4F7F5;
+    border: none;
+    color: #242E27;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  }
+
+  .lightbox-close:hover {
+    background: var(--color-primary, #60816A);
+    color: #ffffff;
+    transform: rotate(90deg);
+  }
+
+  .lightbox-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lightbox-image-wrap {
+    width: 100%;
+    background: radial-gradient(circle at 50% 40%, #FFFFFF 0%, #F5F9F6 100%);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 360px;
+    border: 1px solid rgba(96, 129, 106, 0.16);
+  }
+
+  .lightbox-image-wrap img {
+    max-height: 52vh;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.18));
+  }
+
+  .lightbox-caption {
+    width: 100%;
+    text-align: center;
+    margin-top: 1.25rem;
+  }
+
+  .lightbox-caption h3 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--color-text, #1A1A2E);
+    margin: 0 0 0.35rem;
+  }
+
+  .lightbox-caption p {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    color: var(--color-text-secondary, #555566);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dispenser-card,
+    .card-drawer,
+    .card-showcase,
+    .dispenser-photo,
+    .dispenser-lightbox,
+    .lightbox-dialog {
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>
