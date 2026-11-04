@@ -86,9 +86,13 @@ const steps = [
 <style>
   /* ── Section ────────────────────────────────────── */
   .process-section {
-    background-color: var(--color-bg-rose, #FDF0F5);
+    background:
+      radial-gradient(ellipse 65% 55% at 20% 40%, rgba(232, 160, 191, 0.20) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 85% 75%, rgba(232, 160, 191, 0.15) 0%, transparent 55%),
+      linear-gradient(180deg, #FDF0F5 0%, #FCE8F1 45%, #FDF0F5 85%, #FAF0F4 100%);
     padding: clamp(3.5rem, 5vw, 4.75rem) var(--section-padding-x, 1.5rem);
     overflow: hidden;
+    position: relative;
   }
 
   .process-container {
@@ -153,11 +157,11 @@ const steps = [
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
-    border: 2px solid var(--color-primary, #C92C5E);
+    border: 2px solid var(--color-primary, #60816A);
     font-family: var(--font-heading);
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-primary, #C92C5E);
+    color: var(--color-primary, #60816A);
     background: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
     position: relative;
@@ -166,9 +170,9 @@ const steps = [
   }
 
   .step-circle--filled {
-    background: var(--color-primary, #C92C5E);
+    background: var(--color-primary, #60816A);
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(201, 44, 94, 0.28);
+    box-shadow: 0 4px 14px rgba(96, 129, 106, 0.32);
   }
 
   /* Vertical connector (mobile) */
@@ -177,7 +181,7 @@ const steps = [
     width: 2px;
     flex: 1;
     min-height: 2rem;
-    background: rgba(201, 44, 94, 0.22);
+    background: rgba(96, 129, 106, 0.25);
   }
 
   /* ── Step body ──────────────────────────────────── */
@@ -281,7 +285,7 @@ const steps = [
       left: calc(10% + 1.5rem);
       right: calc(10% + 1.5rem);
       height: 2px;
-      background: rgba(201, 44, 94, 0.22);
+      background: rgba(96, 129, 106, 0.25);
       z-index: 0;
     }
 

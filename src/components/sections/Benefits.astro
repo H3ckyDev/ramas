@@ -235,8 +235,12 @@ const panels = [
 <style>
   .benefits {
     padding-block: var(--section-padding);
-    background-color: var(--color-bg-warm);
+    background:
+      radial-gradient(ellipse 60% 50% at 90% 25%, rgba(96, 129, 106, 0.09) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 45% at 10% 75%, rgba(96, 129, 106, 0.06) 0%, transparent 55%),
+      linear-gradient(180deg, #DCE8DF 0%, #EBF2EC 25%, #F4F8F5 60%, #EEF5F0 100%);
     position: relative;
+    overflow: hidden;
   }
 
   .benefits__header {
@@ -282,7 +286,7 @@ const panels = [
 
   .expansion-panel.is-open {
     border-color: var(--color-primary);
-    box-shadow: 0 8px 30px rgba(232, 160, 191, 0.15);
+    box-shadow: 0 8px 30px rgba(96, 129, 106, 0.15);
   }
 
   /* Trigger Button */
@@ -302,7 +306,7 @@ const panels = [
   }
 
   .expansion-trigger:hover {
-    background-color: rgba(253, 240, 245, 0.4);
+    background-color: rgba(96, 129, 106, 0.04);
   }
 
   .expansion-trigger:focus-visible {
@@ -329,11 +333,15 @@ const panels = [
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: transform var(--duration-fast) var(--ease-out);
+    transition: transform var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out),
+                color var(--duration-fast) var(--ease-out);
   }
 
   .expansion-panel.is-open .expansion-icon {
     transform: scale(1.05);
+    background: var(--color-primary);
+    color: #ffffff;
   }
 
   /* Titles */

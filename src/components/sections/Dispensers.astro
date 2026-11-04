@@ -112,7 +112,10 @@ const categories: DispenserCategory[] = [
   /* ── Contenedor de Sección ────────────────────────────────── */
   .dispensers {
     padding-block: clamp(3.5rem, 5vw, 4.75rem);
-    background-color: var(--color-bg-rose, #FDF0F5);
+    background:
+      radial-gradient(ellipse 65% 55% at 15% 35%, rgba(96, 129, 106, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 85% 75%, rgba(232, 160, 191, 0.08) 0%, transparent 55%),
+      linear-gradient(180deg, #EEF5F0 0%, #F3F7F4 38%, #F8F7F6 75%, #FCF5F7 100%);
     position: relative;
     overflow: hidden;
   }
@@ -191,10 +194,10 @@ const categories: DispenserCategory[] = [
 
   .dispenser-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(201, 44, 94, 0.28);
+    border-color: rgba(96, 129, 106, 0.35);
     box-shadow:
-      0 12px 24px -6px rgba(201, 44, 94, 0.12),
-      0 4px 10px -2px rgba(0, 0, 0, 0.03);
+      0 14px 28px -6px rgba(96, 129, 106, 0.16),
+      0 4px 10px -2px rgba(232, 160, 191, 0.12);
   }
 
   /* ── Anillo Circular ─────────────────────────────────────── */
@@ -202,13 +205,13 @@ const categories: DispenserCategory[] = [
     width: 82px;
     height: 82px;
     border-radius: 50%;
-    border: 2.2px solid #2D2D38;
-    color: #2D2D38;
+    border: 2.2px solid #242E27;
+    color: #242E27;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 0.95rem;
-    background-color: #FAFAFB;
+    background-color: #FAFCFA;
     transition:
       border-color 0.28s ease,
       color 0.28s ease,
@@ -217,9 +220,9 @@ const categories: DispenserCategory[] = [
   }
 
   .dispenser-card:hover .card-ring {
-    border-color: var(--color-primary, #C92C5E);
-    color: var(--color-primary, #C92C5E);
-    background-color: var(--color-primary-subtle, #FDF0F5);
+    border-color: var(--color-primary, #60816A);
+    color: var(--color-primary, #60816A);
+    background-color: var(--color-rose-subtle, #FDF2F7);
     transform: scale(1.06);
   }
 

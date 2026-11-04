@@ -3,6 +3,8 @@
  * Footer.astro — Site footer with navigation, contact info,
  * and legal links. Dark background theme.
  */
+import { Sprout } from '@lucide/astro';
+
 const currentYear = new Date().getFullYear();
 
 const navLinks = [
@@ -20,8 +22,9 @@ const navLinks = [
     <div class="footer__top">
       <!-- Column 1: Brand -->
       <div class="footer__brand">
-        <a href="#" class="footer__logo" aria-label="RAMAS - Ir al inicio">
+        <a href="#inicio" class="footer__logo" aria-label="RAMAS - Ir al inicio">
           RAMAS
+          <Sprout size={20} class="footer__logo-icon" stroke-width={2.2} />
         </a>
         <p class="footer__slogan">Tu antojo, en un clic.</p>
         <p class="footer__brand-desc">
@@ -88,10 +91,10 @@ const navLinks = [
 <style>
   /* ───────── Footer base ───────── */
   .footer {
-    background: var(--color-bg-dark, #1A1A2E);
+    background: var(--color-bg-dark, #152219);
     color: var(--color-text-on-dark, #F9FAFB);
     padding: 4rem 1.5rem 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(232, 160, 191, 0.2);
   }
 
   .footer__container {
@@ -120,18 +123,30 @@ const navLinks = [
 
   /* ───────── Brand column ───────── */
   .footer__logo {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     font-family: var(--font-heading);
     font-size: 1.75rem;
-    font-weight: 600;
-    color: #fff;
+    font-weight: 700;
+    color: var(--color-bg-rose, #FDF0F5);
     text-decoration: none;
     letter-spacing: -0.01em;
     transition: color 0.2s ease;
   }
 
+  .footer__logo-icon {
+    color: var(--color-bg-rose, #FDF0F5);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
   .footer__logo:hover {
-    color: var(--color-primary);
+    color: #ffffff;
+  }
+
+  .footer__logo:hover .footer__logo-icon {
+    transform: rotate(10deg) scale(1.12);
+    color: #ffffff;
   }
 
   .footer__slogan {

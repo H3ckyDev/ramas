@@ -4,34 +4,43 @@
 
 /* --- CSS Custom Properties --- */
 :root {
-  /* Brand Colors */
-  --color-primary: #E8A0BF;
-  --color-primary-dark: #D4789E;
-  --color-primary-darker: #B85C82;
-  --color-primary-light: #F5D5E5;
-  --color-primary-subtle: #FBE9F1;
+  /* Brand Colors — Harmonized Sage Green #60816A & Dusty Rose #E8A0BF */
+  --color-primary: #60816A;
+  --color-primary-dark: #4B6853;
+  --color-primary-darker: #38503F;
+  --color-primary-light: #B2C9BA;
+  --color-primary-subtle: #EDF4EF;
+
+  /* Complementary Rose / Blush Palette */
+  --color-rose: #E8A0BF;
+  --color-rose-dark: #D4789E;
+  --color-rose-darker: #B85C82;
+  --color-rose-light: #F5D5E5;
+  --color-rose-subtle: #FDF2F7;
 
   /* Backgrounds */
   --color-bg-white: #FEFCFD;
-  --color-bg-rose: #FDF0F5;
-  --color-bg-cream: #FFF9F5;
-  --color-bg-dark: #1A1A2E;
-  --color-bg-dark-accent: #232340;
+  --color-bg-green-soft: #F0F5F2;
+  --color-bg-rose: #FDF2F7;
+  --color-bg-cream: #FAF7F4;
+  --color-bg-dark: #152219;
+  --color-bg-dark-accent: #1F3024;
 
   /* Text */
-  --color-text: #2D2D2D;
-  --color-text-secondary: #555;
-  --color-text-muted: #6B7280;
-  --color-text-on-dark: #F9FAFB;
-  --color-text-on-dark-muted: #B0B3C1;
+  --color-text: #242E27;
+  --color-text-secondary: #4A564E;
+  --color-text-muted: #6B7A70;
+  --color-text-on-dark: #F5F9F6;
+  --color-text-on-dark-muted: #A8B8AC;
 
   /* Accents */
   --color-accent-green: #25D366;
   --color-accent-green-dark: #1EBE5A;
 
   /* Borders & Surfaces */
-  --color-border: #E5E7EB;
-  --color-border-light: #F0E6EB;
+  --color-border: #E0E8E2;
+  --color-border-light: #EBF2EC;
+  --color-border-rose: #F2E3EB;
   --color-surface-elevated: #FFFFFF;
 
   /* Typography */
@@ -98,7 +107,8 @@
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
-  --shadow-soft: 0 8px 32px rgba(232, 160, 191, 0.12);
+  --shadow-soft: 0 8px 32px rgba(96, 129, 106, 0.12);
+  --shadow-rose: 0 8px 32px rgba(232, 160, 191, 0.15);
 
   /* Transitions */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -286,7 +296,7 @@ p {
 .btn--primary:hover {
   background-color: var(--color-primary-darker);
   border-color: var(--color-primary-darker);
-  box-shadow: 0 6px 20px rgba(212, 120, 158, 0.3);
+  box-shadow: 0 6px 20px rgba(75, 104, 83, 0.35);
 }
 
 .btn--secondary {

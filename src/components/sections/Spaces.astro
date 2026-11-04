@@ -86,8 +86,13 @@ const spaces = [
 <style>
   /* ── Section ────────────────────────────────────── */
   .spaces-section {
-    background: var(--color-bg-white);
+    background:
+      radial-gradient(ellipse 55% 55% at 85% 60%, rgba(232, 160, 191, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 45% at 15% 20%, rgba(96, 129, 106, 0.05) 0%, transparent 55%),
+      linear-gradient(180deg, #FCF5F7 0%, #FAF6F8 30%, #FDF3F6 70%, #FDF0F5 100%);
     padding-block: var(--section-padding, clamp(3.5rem, 5vw, 4.75rem));
+    position: relative;
+    overflow: hidden;
   }
 
   .spaces-container {
